@@ -11,7 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
-import org.hibernate.annotations.ManyToAny;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class Categoria implements Serializable{
@@ -23,7 +23,8 @@ public class Categoria implements Serializable{
     
     private String name;
 
-    @ManyToMany(mappedBy = "categorias")
+    @JsonManagedReference// Para evitar serializacao ciclica, assim ele so vai puxar as categorias e os produtos de cada
+    @ManyToMany(mappedBy = "categorias") // Mapeamento N:N
     private List<Produto> produtos = new ArrayList();
 
     public Categoria() {
