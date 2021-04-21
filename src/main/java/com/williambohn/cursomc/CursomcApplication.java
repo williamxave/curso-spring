@@ -5,10 +5,15 @@ import java.util.List;
 
 import com.williambohn.cursomc.domain.Categoria;
 import com.williambohn.cursomc.domain.Cidade;
+import com.williambohn.cursomc.domain.Cliente;
+import com.williambohn.cursomc.domain.Endereco;
 import com.williambohn.cursomc.domain.Estado;
 import com.williambohn.cursomc.domain.Produto;
+import com.williambohn.cursomc.domain.enums.TipoCliente;
 import com.williambohn.cursomc.repository.CategoriaRepository;
 import com.williambohn.cursomc.repository.CidadeRepository;
+import com.williambohn.cursomc.repository.ClienteRepository;
+import com.williambohn.cursomc.repository.EnderecoRepository;
 import com.williambohn.cursomc.repository.EstadoRepository;
 import com.williambohn.cursomc.repository.ProdutoRepository;
 
@@ -31,6 +36,12 @@ public class CursomcApplication implements CommandLineRunner{
 
 	@Autowired
 	private EstadoRepository estadoRepository;
+
+	@Autowired
+	private ClienteRepository clienteRepository;
+
+	@Autowired
+	private EnderecoRepository enderecoRepository;
  
 	public static void main(String[] args) {
 		SpringApplication.run(CursomcApplication.class, args);
@@ -68,8 +79,19 @@ public class CursomcApplication implements CommandLineRunner{
 		
 		estadoRepository.saveAll(Arrays.asList(e1,e2));
 		cidadeRepository.saveAll(Arrays.asList(c1,c2,c3));
-		
 
+		Cliente cli1 = new Cliente(null, "Maria Silva", "maria@gmail.com", "644.411.560-49", TipoCliente.PESSOAFISICA);
+		cli1.getTelefones().addAll(Arrays.asList("0000-0000"));
+		Cliente cli2 = new Cliente(null, "Carlos Breu", "carlod@gmail.com", "55.577.094/0001-58", TipoCliente.PESSOAJURIDICA);
+		cli2.getTelefones().addAll(Arrays.asList("1111-1111"));
+
+		Endereco end1 = new Endereco(null,"Rua Flores", "300", "Apto 303", "Jardim"	, "3237283723", cli1, c1);
+		Endereco end2 = new Endereco(null,"Rua enaide", "320", "Casa", "Floresta"	, "YEG6AE23", cli1, c2);
+
+		cli1.getEnderecos().addAll(Arrays.asList(end1, end2));
+
+		clienteRepository.saveAll(Arrays.asList(cli1,cli2));
+		enderecoRepository.saveAll(Arrays.asList(end1,end2));
 
 	}
 }
