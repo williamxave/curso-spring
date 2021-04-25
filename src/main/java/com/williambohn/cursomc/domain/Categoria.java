@@ -11,8 +11,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 @Entity
 public class Categoria implements Serializable{
     private static final long serialVersionUID = 1L;
@@ -21,18 +19,17 @@ public class Categoria implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer  id;
     
-    private String name;
+    private String nome;
 
-    @JsonManagedReference// Para evitar serializacao ciclica, assim ele so vai puxar as categorias e os produtos de cada
     @ManyToMany(mappedBy = "categorias") // Mapeamento N:N
     private List<Produto> produtos = new ArrayList();
 
     public Categoria() {
     }
 
-    public Categoria(Integer id, String name) {
+    public Categoria(Integer id, String nome) {
         this.id = id;
-        this.name = name;
+        this.nome = nome;
     }
 
     public Integer getId() {
@@ -43,12 +40,20 @@ public class Categoria implements Serializable{
         this.id = id;
     }
 
-    public String getName() {
-        return this.name;
+    public String getNome() {
+        return this.nome;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public List<Produto> getProdutos() {
+        return this.produtos;
+    }
+
+    public void setProdutos(List<Produto> produtos) {
+        this.produtos = produtos;
     }
 
     public Categoria id(Integer id) {
@@ -56,18 +61,16 @@ public class Categoria implements Serializable{
         return this;
     }
 
-    public Categoria name(String name) {
-        setName(name);
+    public Categoria nome(String nome) {
+        setNome(nome);
         return this;
     }
 
-    public List<Produto> getProdutos() {
-        return produtos;
+    public Categoria produtos(List<Produto> produtos) {
+        setProdutos(produtos);
+        return this;
     }
 
-    public void setProdutos(List<Produto> produtos) {
-        this.produtos = produtos;
-    }
     @Override
     public boolean equals(Object o) {
         if (o == this)
@@ -88,9 +91,12 @@ public class Categoria implements Serializable{
     public String toString() {
         return "{" +
             " id='" + getId() + "'" +
-            ", name='" + getName() + "'" +
+            ", nome='" + getNome() + "'" +
+            ", produtos='" + getProdutos() + "'" +
             "}";
     }
+
+
 
    
 }
