@@ -109,7 +109,7 @@ public class Cliente implements Serializable{
         this.enderecos = enderecos;
     }
 
-    public Set<String> getTelefones() {
+    public Set<String> getTelefones() { 
         return this.telefones;
     }
 
