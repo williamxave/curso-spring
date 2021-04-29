@@ -1,5 +1,6 @@
 package com.williambohn.cursomc.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import com.williambohn.cursomc.domain.Categoria;
@@ -10,6 +11,8 @@ import com.williambohn.cursomc.service.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
+
+
 
 @Service
 public class CategoriaService {
@@ -38,12 +41,12 @@ public class CategoriaService {
         try{
             categoriaRepository.deleteById(id);
         }catch(DataIntegrityViolationException e){
-
             throw new DataIntegrityException("Não é possível excluir uma categoria que possui produtos");
-           
         }
-       
     }
 
-   
+    public List<Categoria> findAll(){
+        return categoriaRepository.findAll();
+    }
+
 }
